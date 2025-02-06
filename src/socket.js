@@ -1,6 +1,9 @@
 import { io } from "socket.io-client";
 
-const socket = io("b13-eeszen24.mak3r.dev"); // initialize websocket connection
+const socket = io("https://b13-eeszen24.mak3r.dev", {
+  transports: ["websocket", "polling"],
+});
+// initialize websocket connection
 // const socket = io("localhost:5555"); // initialize websocket connection
 
 export default socket;
