@@ -6,9 +6,15 @@ import { Chess } from "chess.js";
 import { getOpenings, deleteOpening } from "../../utility/opening_api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
+import { isAdmin } from "../../utility/cookie_api";
+import { getUserToken } from "../../utility/cookie_api";
 
 function Openings() {
   const [openings, setOpenings] = useState([]);
+  const [cookies] = useCookies(["currenUser"]);
+  const token = getUserToken(cookies);
   const navigate = useNavigate("/");
 
   useEffect(() => {
@@ -60,14 +66,16 @@ function Openings() {
       >
         Chess Openings
       </Typography>
-      <Button
-        variant="contained"
-        size="small"
-        sx={{ marginBottom: 2 }}
-        onClick={() => navigate("/openings/add")}
-      >
-        Add New Opening
-      </Button>
+      {isAdmin(cookies) ? (
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ marginBottom: 2 }}
+          onClick={() => navigate("/openings/add")}
+        >
+          Add New Opening
+        </Button>
+      ) : null}
 
       <Grid container spacing={3} justifyContent="center">
         {openings && openings.length > 0 ? (
@@ -93,31 +101,34 @@ function Openings() {
                     arePiecesDraggable={false}
                   />
                 </Container>
-
-                <Grid
-                  container
-                  spacing={2}
-                  justifyContent="center"
-                  sx={{ mt: 2 }}
-                >
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      onClick={() => navigate("/openings/edit/" + opening._id)}
-                    >
-                      Edit
-                    </Button>
+                {isAdmin(cookies) ? (
+                  <Grid
+                    container
+                    spacing={2}
+                    justifyContent="center"
+                    sx={{ mt: 2 }}
+                  >
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        onClick={() =>
+                          navigate("/openings/edit/" + opening._id)
+                        }
+                      >
+                        Edit
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        onClick={() => handleDelete(opening._id)}
+                      >
+                        Delete
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      onClick={() => handleDelete(opening._id)}
-                    >
-                      Delete
-                    </Button>
-                  </Grid>
-                </Grid>
+                ) : null}
               </Paper>
             </Grid>
           ))
