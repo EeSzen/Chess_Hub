@@ -6,6 +6,7 @@ import { API_URL } from "../constants";
 export const getOpenings = async () => {
   try {
     const response = await axios.get(API_URL + "/openings");
+    console.log(API_URL);
     return response.data;
   } catch (error) {
     toast.error(error.response.data);
