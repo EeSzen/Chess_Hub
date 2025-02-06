@@ -37,6 +37,7 @@ function Header(props) {
   const isHistoryPage = location.pathname === "/history";
   const isManagerPage = location.pathname === "/manager";
   const isLeaderboardPage = location.pathname === "/leaderboard";
+  const isOpeningsPage = location.pathname === "/openings";
 
   const handleLogOut = () => {
     // clear the cookies
@@ -86,6 +87,14 @@ function Header(props) {
             onClick={() => navigate("/leaderboard")}
           >
             <ListItemText primary="Leaderboard" />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton
+            disabled={isOpeningsPage}
+            onClick={() => navigate("/openings")}
+          >
+            <ListItemText primary="Openings" />
           </ListItemButton>
         </ListItem>
         {isAdmin(cookies) ? (

@@ -11,6 +11,9 @@ import Manage from "./Pages/Manager";
 import UserEdit from "./Pages/UserEdit";
 import Leaderboard from "./Pages/Leaderboard";
 import Profile from "./Pages/Profile";
+import Openings from "./Pages/Opening";
+import AddOpening from "./Pages/AddOpening";
+import EditOpening from "./Pages/EditOpening";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
           <Route path="/manage/:_id/edit" element={<UserEdit />} />
           <Route path="/leaderboard" element={<Leaderboard />} />
           <Route path="/profile/:_id" element={<Profile />} />
+          <Route path="/openings" element={<Openings />} />
+          <Route path="/openings/add" element={<AddOpening />} />
+          <Route path="/openings/edit/:_id" element={<EditOpening />} />
         </Routes>
       </BrowserRouter>
       <Toaster richColors position="top-right" />
